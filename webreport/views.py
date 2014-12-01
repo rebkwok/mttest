@@ -13,7 +13,6 @@ def get_url(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             url = form.cleaned_data['url']
-            #import ipdb; ipdb.set_trace()
             context = process_url(url)
             return render(request, 'webreport/report.xhtml', context)
 

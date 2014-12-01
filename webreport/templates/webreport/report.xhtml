@@ -8,16 +8,62 @@
     </head>
 
     <body>
-        <h1>Report</h1>
+        <a href="{% url 'get_url' %}">back to form</a>
+        <h1>Report on {{ url }}</h1>
 
-        {% if errors %}
-            {{ errors }}
+        {% if error %}
+            {{ error }}
         {% else %}
-            <h4>Title</h4>
-            {{ title }}
-            <h4>Meta</h4>
-            {{ meta }}
+            <h2>Summary</h2>
+                <h4>Title</h4>
+                {{ title }}
+                <h4>Meta tags</h4>
+                    {% for tag in meta %}
+                    <li>{{ tag }}</li>
+                    {% endfor %}
+                <h4>Size</h4>
+                {{ size }}
+
+
+            <h2>Content</h2>
+                <p>Number of words: {{ words }}</p>
+                <p>Number of unique words: {{ unique_words }}</p>
+                <p>5 most common words:
+                    <ul>
+                        {% for word, count in most_common %}
+                        <li>{{ word }}: {{ count }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+
+            <h2>Meta Keywords</h2>
+            <p>All kewords:</p>
+            <ul>
+            {% for word in keywords %}
+                <li>{{ word }}</li>
+            {%endfor%}</p>
+            </ul>
+            <p>Keywords <strong>not</strong> in content:</p>
+            {% if unused_keywords %}
+                <ul>
+                {% for word in unused_keywords %}
+                    <li>{{ word }}</li>
+                {%endfor%}</p>
+            </ul>
+            {% else %}
+                <p>N/A</p>
+            {% endif %}
+
+            <h2>Links</h2>
+            <ul>
+            {% for text, link in links %}
+                <li>{{ text }}: <a href="{{ link }}">{{ link }}</a></li>
+            {% endfor %}
+            </ul>
+
+
         {% endif %}
 
+        <a href="{% url 'get_url' %}">back to form</a>
     </body>
 </html>
